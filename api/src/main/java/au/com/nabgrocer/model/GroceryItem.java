@@ -1,4 +1,4 @@
-package au.com.nabgrocer.nabgrocer.model;
+package au.com.nabgrocer.model;
 
 public class GroceryItem {
 

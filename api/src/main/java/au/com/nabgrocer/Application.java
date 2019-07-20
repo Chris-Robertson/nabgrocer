@@ -1,4 +1,4 @@
-package au.com.nabgrocer.nabgrocer;
+package au.com.nabgrocer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

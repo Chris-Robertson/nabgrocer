@@ -1,6 +1,6 @@
-package au.com.nabgrocer.nabgrocer.controller;
+package au.com.nabgrocer.controller;
 
-import au.com.nabgrocer.nabgrocer.model.GroceryItem;
+import au.com.nabgrocer.model.GroceryItem;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
