@@ -1,16 +1,23 @@
 package au.com.nabgrocer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class GroceryItem {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
+    private Long id;
+
     private String name;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -18,7 +25,7 @@ public class GroceryItem {
         return name;
     }
 
-    public GroceryItem setId(String id) {
+    public GroceryItem setId(Long id) {
         this.id = id;
         return this;
     }

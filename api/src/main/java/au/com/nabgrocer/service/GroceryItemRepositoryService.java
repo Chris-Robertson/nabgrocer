@@ -2,6 +2,8 @@ package au.com.nabgrocer.service;
 
 import au.com.nabgrocer.repository.GroceryItemRepository;
 import au.com.nabgrocer.model.GroceryItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public interface GroceryItemRepositoryService {
     @Service
     class GroceryItemRepositoryServiceImpl implements GroceryItemRepositoryService {
 
+        private static final Logger LOG = LoggerFactory.getLogger(GroceryItemRepositoryServiceImpl.class);
+
         private GroceryItemRepository groceryItemRepository;
 
         @Autowired
@@ -22,13 +26,16 @@ public interface GroceryItemRepositoryService {
 
         @Override
         public GroceryItem retrieveGroceryItemByName(final String name) {
-            return groceryItemRepository.findByName(name);
+            GroceryItem retrievedGroceryItem = groceryItemRepository.findByName(name);
+            LOG.debug("'Retrieved grocery item from database' retrieved_grocery_item='{}'", retrievedGroceryItem);
+            return retrievedGroceryItem;
         }
 
         @Override
-        public GroceryItem insertGroceryItem(final GroceryItem groceryItem) {
-            return groceryItemRepository.save(groceryItem);
+        public GroceryItem insertGroceryItem(final GroceryItem groceryItemToSave) {
+            GroceryItem savedGroceryItem = groceryItemRepository.save(groceryItemToSave);
+            LOG.debug("'Saved grocery item to database' saved_grocery_item='{}'", savedGroceryItem);
+            return savedGroceryItem;
         }
     }
 }
-
