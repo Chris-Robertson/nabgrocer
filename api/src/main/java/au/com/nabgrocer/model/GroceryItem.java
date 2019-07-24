@@ -1,7 +1,12 @@
 package au.com.nabgrocer.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class GroceryItem {
 
+    @Id
     private String id;
     private String name;
 
