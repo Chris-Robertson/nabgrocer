@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public interface GroceryItemRepositoryService {
 
     GroceryItem retrieveGroceryItemByName(String name);
+    GroceryItem insertGroceryItem(GroceryItem groceryItem);
 
     @Service
     class GroceryItemRepositoryServiceImpl implements GroceryItemRepositoryService {
@@ -22,6 +23,11 @@ public interface GroceryItemRepositoryService {
         @Override
         public GroceryItem retrieveGroceryItemByName(final String name) {
             return groceryItemRepository.findByName(name);
+        }
+
+        @Override
+        public GroceryItem insertGroceryItem(final GroceryItem groceryItem) {
+            return groceryItemRepository.save(groceryItem);
         }
     }
 }

@@ -28,4 +28,11 @@ public class GroceryItem {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "GroceryItem{"
+                + "id='" + id + '\''
+                + ", name='" + name + '\''
+                + '}';
+    }
 }
