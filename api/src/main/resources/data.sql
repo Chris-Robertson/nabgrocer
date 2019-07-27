@@ -5,7 +5,7 @@ CREATE TABLE grocery_item (
   name VARCHAR(250) NOT NULL,
 );
 
-INSERT INTO grocery_item (name) VALUES
-  ('apples'),
-  ('toothpaste'),
-  ('bread')
+-- INSERT INTO grocery_item (name) VALUES
+--   ('apples'),
+--   ('toothpaste'),
+--   ('bread')
