@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,13 +31,13 @@ public class NabGrocerController {
         this.groceryItemService = groceryItemService;
     }
 
-    @GetMapping("v1/items")
-    public GroceryItem getItem(final @RequestParam("name") String name) {
-        LOG.debug("'Get item by name request received' name_param='{}'", name);
-        return groceryItemService.retrieveGroceryItemByName(name);
+    @GetMapping("/v1/items/{itemId}")
+    public GroceryItem getItem(final @PathVariable("itemId") long itemId) {
+        LOG.debug("'Get item by id request received' item_id='{}'", itemId);
+        return groceryItemService.getGroceryItemById(itemId);
     }
 
-    @PostMapping("/items")
+    @PostMapping("/v1/items")
     @ResponseStatus(HttpStatus.CREATED)
     public GroceryItem createItem(final @RequestBody GroceryItemDto groceryItemDto) {
         LOG.debug("'Create item request received' new_item='{}'", groceryItemDto);
@@ -46,16 +45,16 @@ public class NabGrocerController {
         return groceryItemService.insertGroceryItem(groceryItemToCreate);
     }
 
-    @PutMapping("/items")
+    @PutMapping("/v1/items")
     public GroceryItem updateItem(final @RequestBody GroceryItemDto groceryItemDto) {
         LOG.debug("'Update item request received' item_to_update='{}'", groceryItemDto);
         final GroceryItem groceryItemToUpdate = mapToEntity(groceryItemDto);
         return groceryItemService.updateGroceryItem(groceryItemToUpdate);
     }
 
-    @DeleteMapping("/items/{itemId}")
+    @DeleteMapping("/v1/items/{itemId}")
     public void deleteItem(final @PathVariable int itemId) {
-        LOG.debug("'Delete item request received' item_idd='{}'", itemId);
+        LOG.debug("'Delete item request received' item_id='{}'", itemId);
         groceryItemService.deleteGroceryItem(itemId);
     }
 

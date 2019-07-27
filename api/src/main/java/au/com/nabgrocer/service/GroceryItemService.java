@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 public interface GroceryItemService {
 
-    GroceryItem retrieveGroceryItemByName(String name);
+    GroceryItem getGroceryItemById(long itemId);
 
     GroceryItem insertGroceryItem(GroceryItem groceryItem);
 
@@ -31,8 +31,8 @@ public interface GroceryItemService {
         }
 
         @Override
-        public GroceryItem retrieveGroceryItemByName(final String name) {
-            GroceryItem retrievedGroceryItem = groceryItemRepository.findByName(name);
+        public GroceryItem getGroceryItemById(final long itemId) {
+            GroceryItem retrievedGroceryItem = groceryItemRepository.findById(itemId);
             LOG.debug("'Retrieved grocery item from database' "
                     + "retrieved_grocery_item='{}'", retrievedGroceryItem);
             return retrievedGroceryItem;

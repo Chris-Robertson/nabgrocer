@@ -2,7 +2,17 @@ package au.com.nabgrocer.model;
 
 public class GroceryItemDto {
 
+    private long itemId;
+
     private String name;
+
+    public long getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(final long itemId) {
+        this.itemId = itemId;
+    }
 
     public String getName() {
         return name;
@@ -15,7 +25,8 @@ public class GroceryItemDto {
     @Override
     public String toString() {
         return "GroceryItemDto{"
-                + "name='" + name + '\''
+                + "itemId=" + itemId
+                + ", name='" + name + '\''
                 + '}';
     }
 }
