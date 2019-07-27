@@ -25,14 +25,12 @@ public class GroceryItem {
         return name;
     }
 
-    public GroceryItem setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
-        return this;
     }
 
-    public GroceryItem setName(String name) {
+    public void setName(final String name) {
         this.name = name;
-        return this;
     }
 
     @Override

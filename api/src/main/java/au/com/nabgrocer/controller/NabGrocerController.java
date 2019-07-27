@@ -1,7 +1,9 @@
 package au.com.nabgrocer.controller;
 
 import au.com.nabgrocer.model.GroceryItem;
-import au.com.nabgrocer.service.GroceryItemRepositoryService;
+import au.com.nabgrocer.model.GroceryItemDto;
+import au.com.nabgrocer.service.GroceryItemService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +16,38 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class NabGrocerController {
 
-    private Logger log = LoggerFactory.getLogger(NabGrocerController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(NabGrocerController.class);
 
-    private GroceryItemRepositoryService groceryItemRepositoryService;
+    private final ModelMapper modelMapper = new ModelMapper();
+
+    private final GroceryItemService groceryItemService;
 
     @Autowired
-    public NabGrocerController(GroceryItemRepositoryService groceryItemRepositoryService) {
-        this.groceryItemRepositoryService = groceryItemRepositoryService;
+    public NabGrocerController(final GroceryItemService groceryItemService) {
+        this.groceryItemService = groceryItemService;
     }
 
     @GetMapping("/item")
-    public GroceryItem getItem(final @RequestParam(value = "name") String name) {
-        log.debug("'Get item by name request received' name_param='{}'", name);
-        return groceryItemRepositoryService.retrieveGroceryItemByName(name);
+    public GroceryItem getItem(final @RequestParam("name") String name) {
+        LOG.debug("'Get item by name request received' name_param='{}'", name);
+        return groceryItemService.retrieveGroceryItemByName(name);
     }
 
     @PostMapping("/item")
-    public GroceryItem createItem(final @RequestBody GroceryItem groceryItem) {
-        log.debug("'Create item request received' new_item='{}'", groceryItem);
-        return groceryItemRepositoryService.insertGroceryItem(groceryItem);
+    public GroceryItem createItem(final @RequestBody GroceryItemDto groceryItemDto) {
+        LOG.debug("'Create item request received' new_item='{}'", groceryItemDto);
+        final GroceryItem groceryItemToCreate = mapToEntity(groceryItemDto);
+        return groceryItemService.insertGroceryItem(groceryItemToCreate);
+    }
+
+    @PostMapping("/item/update")
+    public GroceryItem updateItem(final @RequestBody GroceryItemDto groceryItemDto) {
+        LOG.debug("'Update item request received' item_to_update='{}'", groceryItemDto);
+        final GroceryItem groceryItemToUpdate = mapToEntity(groceryItemDto);
+        return groceryItemService.updateGroceryItem(groceryItemToUpdate);
+    }
+
+    private GroceryItem mapToEntity(final GroceryItemDto groceryItemDto) {
+        return modelMapper.map(groceryItemDto, GroceryItem.class);
     }
 }
