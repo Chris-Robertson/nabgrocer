@@ -32,7 +32,6 @@ class NabGrocerControllerSpec extends Specification {
         repository.save(new GroceryItem(name: "apples"))
 
         expect:
-        println repository.findAll()
         mockMvc.perform(get("/v1/items/1"))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -40,7 +39,7 @@ class NabGrocerControllerSpec extends Specification {
                 .contentAsString == "{\"id\":1,\"name\":\"apples\"}"
     }
 
-    def "should insert item to database with valid put request"() {
+    def "should return 200 and insert new item to database for valid put request"() {
         expect:
         mockMvc.perform(put("/v1/items")
                 .contentType(MediaType.APPLICATION_JSON)
