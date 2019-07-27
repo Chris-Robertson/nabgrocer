@@ -2,9 +2,12 @@ plugins {
     id 'java'
     id 'groovy'
 
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'checkstyle'
+    id 'com.github.spotbugs' version '2.0.0'
     id 'idea'
-    id "io.spring.dependency-management" version "1.0.8.RELEASE"
     id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'pmd'
 }
 
 group = 'au.com.nabgrocer'
@@ -17,11 +20,14 @@ repositories {
 }
 
 dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'com.h2database:h2:1.4.199'
+    implementation 'com.puppycrawl.tools:checkstyle:8.22'
+    implementation 'org.modelmapper:modelmapper:2.3.5'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.1.6.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.1.6.RELEASE'
 
-    testImplementation 'org.codehaus.groovy:groovy-all:2.5.7' // groovy test sources support
+    testImplementation 'org.codehaus.groovy:groovy-all:2.5.7'
     testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
     testImplementation 'org.spockframework:spock-spring:1.3-groovy-2.5'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.1.6.RELEASE'
@@ -29,10 +35,25 @@ dependencies {
 
 test {
     testLogging {
-        exceptionFormat = "full"
-        events = ["passed", "skipped", "failed"]
-        
-        // output full test logs to console
+        exceptionFormat = 'full'
+        events = ['passed', 'skipped', 'failed']
         showStandardStreams = true
     }
+}
+
+pmd {
+    ruleSets = []
+    ruleSetFiles = files('config/pmd/ruleset.xml')
+    consoleOutput = true
+    ignoreFailures = true
+}
+
+spotbugs {
+    sourceSets = [sourceSets.main]
+    excludeFilter = file('config/spotbugs/excludeFilter.xml')
+}
+
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    reports.xml.enabled = false
+    reports.html.enabled = true
 }

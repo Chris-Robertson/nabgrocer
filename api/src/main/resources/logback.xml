@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration debug="false">
     <property name="LOG_FILE" value="./logs/nab_grocer.log"/>
     <property name="LOG_PATTERN" value="[%d{YYYY-MM-dd HH:mm:ss.SSS Z}] [level=${LOG_LEVEL_PATTERN:-%5p}] --- [class=%-40.40logger{39}] : [message=%m]%n"/>
 
@@ -15,14 +15,14 @@
     </appender>
 
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>
                 %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
             </Pattern>
-        </layout>
+        </encoder>
     </appender>
 
-    <root level="info">
+    <root level="warn">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>

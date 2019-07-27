@@ -14,3 +14,12 @@ Write a simple frontend and backend application that provides the following func
 - Spring Boot finds H2 on the classpath and automagically configures the DataSource.
 - If a custom DataSource is required, it can be configured in `application.properties`
 
+### Static Code Analysis
+
+### Style
+https://google.github.io/styleguide/javaguide.html
+https://checkstyle.org/
+https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml
+
+findbugs
+pmd
