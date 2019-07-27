@@ -7,7 +7,10 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +51,12 @@ public class NabGrocerController {
         LOG.debug("'Update item request received' item_to_update='{}'", groceryItemDto);
         final GroceryItem groceryItemToUpdate = mapToEntity(groceryItemDto);
         return groceryItemService.updateGroceryItem(groceryItemToUpdate);
+    }
+
+    @DeleteMapping("/items/{itemId}")
+    public void deleteItem(final @PathVariable int itemId) {
+        LOG.debug("'Delete item request received' item_idd='{}'", itemId);
+        groceryItemService.deleteGroceryItem(itemId);
     }
 
     private GroceryItem mapToEntity(final GroceryItemDto groceryItemDto) {

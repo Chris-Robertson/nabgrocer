@@ -15,7 +15,7 @@ public interface GroceryItemService {
 
     GroceryItem updateGroceryItem(GroceryItem groceryItem);
 
-    GroceryItem deleteGroceryItem(GroceryItem groceryItem);
+    void deleteGroceryItem(long itemId);
 
     @Service
     class GroceryItemServiceImpl implements GroceryItemService {
@@ -54,12 +54,9 @@ public interface GroceryItemService {
             return updatedGroceryItem;
         }
 
-        /**
-         * Not yet implemented.
-         */
         @Override
-        public GroceryItem deleteGroceryItem(final GroceryItem groceryItemToDelete) {
-            return groceryItemToDelete;
+        public void deleteGroceryItem(final long itemId) {
+            groceryItemRepository.deleteById(itemId);
         }
     }
 }
