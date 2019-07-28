@@ -4,13 +4,13 @@ import java.util.Set;
 
 public class GroceryTagDto {
 
-    private Long tagId;
+    private long tagId;
 
     private String tagName;
 
     private Set<GroceryItemDto> itemsWithTag;
 
-    public Long getTagId() {
+    public long getTagId() {
         return tagId;
     }
 
@@ -18,7 +18,7 @@ public class GroceryTagDto {
         return tagName;
     }
 
-    public void setTagId(final Long tagId) {
+    public void setTagId(final long tagId) {
         this.tagId = tagId;
     }
 

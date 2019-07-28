@@ -22,7 +22,7 @@ public class GroceryItem {
     @Column(unique = true)
     private String itemName;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<GroceryTag> itemTags;
 
     public Long getItemId() {

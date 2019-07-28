@@ -1,5 +1,6 @@
 package au.com.nabgrocer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,12 +15,13 @@ import javax.persistence.Table;
 public class GroceryTag {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long tagId;
 
     @Column(unique = true)
     private String tagName;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "itemTags")
     private Set<GroceryItem> itemsWithTag;
 
@@ -52,7 +54,6 @@ public class GroceryTag {
         return "GroceryTag{"
                 + "tagId=" + tagId
                 + ", tagName='" + tagName + '\''
-                + ", itemsWithTag=" + itemsWithTag
                 + '}';
     }
 }
