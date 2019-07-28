@@ -1,40 +1,60 @@
 package au.com.nabgrocer.model;
 
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "items")
 public class GroceryItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long itemId;
 
-    private String name;
+    @Column(unique = true)
+    private String itemName;
 
-    public Long getId() {
-        return id;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<GroceryTag> itemTags;
+
+    public Long getItemId() {
+        return itemId;
     }
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setId(final Long id) {
-        this.id = id;
+    public void setItemId(final Long itemId) {
+        this.itemId = itemId;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public void setItemName(final String itemName) {
+        this.itemName = itemName;
+    }
+
+    public Set<GroceryTag> getItemTags() {
+        return itemTags;
+    }
+
+    public void setItemTags(final Set<GroceryTag> itemTags) {
+        this.itemTags = itemTags;
     }
 
     @Override
     public String toString() {
         return "GroceryItem{"
-                + "id='" + id + '\''
-                + ", name='" + name + '\''
+                + "itemId=" + itemId
+                + ", itemName='" + itemName + '\''
+                + ", itemTags=" + itemTags
                 + '}';
     }
 }

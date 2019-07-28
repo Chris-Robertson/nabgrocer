@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GroceryItemRepository extends PagingAndSortingRepository<GroceryItem, Long> {
 
-    GroceryItem findById(long itemId);
+    GroceryItem findByItemId(long itemId);
+
+    GroceryItem findByItemName(String name);
 
 }
