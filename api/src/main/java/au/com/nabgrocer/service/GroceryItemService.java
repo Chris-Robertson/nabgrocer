@@ -1,8 +1,12 @@
 package au.com.nabgrocer.service;
 
 import au.com.nabgrocer.exception.GroceryItemNotFoundException;
+import au.com.nabgrocer.exception.GroceryTagNotFoundException;
 import au.com.nabgrocer.model.GroceryItem;
+import au.com.nabgrocer.model.GroceryTag;
 import au.com.nabgrocer.repository.GroceryItemRepository;
+import au.com.nabgrocer.repository.GroceryTagRepository;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +17,18 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class GroceryItemService {
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(GroceryItemService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GroceryItemService.class);
 
     private final GroceryItemRepository groceryItemRepository;
 
+    private final GroceryTagRepository groceryTagRepository;
+
     @Autowired
-    public GroceryItemService(final GroceryItemRepository groceryItemRepository) {
+    public GroceryItemService(final GroceryItemRepository groceryItemRepository,
+                              final GroceryTagRepository groceryTagRepository) {
+
         this.groceryItemRepository = groceryItemRepository;
+        this.groceryTagRepository = groceryTagRepository;
     }
 
     public GroceryItem getGroceryItemById(final long itemId) {
@@ -28,6 +36,25 @@ public class GroceryItemService {
         LOG.debug("'Retrieved grocery item from database' "
                 + "retrieved_grocery_item='{}'", retrievedGroceryItem);
         return retrievedGroceryItem;
+    }
+
+    public List<GroceryItem> getGroceryItemsByTag(final long tagId)
+            throws GroceryTagNotFoundException {
+
+        if (groceryTagRepository.existsById(tagId)) {
+            final GroceryTag groceryTag = groceryTagRepository.findByTagId(tagId);
+            final List<GroceryItem> retrievedGroceryItems = groceryItemRepository
+                    .findByItemTags(groceryTag);
+
+            LOG.debug("'Retrieved grocery items from database by tagId' "
+                    + "retrieved_grocery_items='{}'", retrievedGroceryItems);
+
+            return retrievedGroceryItems;
+
+        } else {
+            throw new GroceryTagNotFoundException("GroceryTag with provided tagId does not "
+                    + "exist in database.");
+        }
     }
 
     public GroceryItem insertGroceryItem(final GroceryItem groceryItemToSave) {

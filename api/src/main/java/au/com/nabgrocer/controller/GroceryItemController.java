@@ -1,9 +1,11 @@
 package au.com.nabgrocer.controller;
 
 import au.com.nabgrocer.exception.GroceryItemNotFoundException;
+import au.com.nabgrocer.exception.GroceryTagNotFoundException;
 import au.com.nabgrocer.model.GroceryItem;
 import au.com.nabgrocer.model.GroceryItemDto;
 import au.com.nabgrocer.service.GroceryItemService;
+import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,20 +17,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class NabGrocerController {
+public class GroceryItemController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(NabGrocerController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GroceryItemController.class);
 
     private final ModelMapper modelMapper = new ModelMapper();
 
     private final GroceryItemService groceryItemService;
 
     @Autowired
-    public NabGrocerController(final GroceryItemService groceryItemService) {
+    public GroceryItemController(final GroceryItemService groceryItemService) {
         this.groceryItemService = groceryItemService;
     }
 
@@ -36,6 +39,15 @@ public class NabGrocerController {
     public GroceryItem getItem(final @PathVariable("itemId") long itemId) {
         LOG.debug("'Get item by id request received' item_id='{}'", itemId);
         return groceryItemService.getGroceryItemById(itemId);
+    }
+
+    @GetMapping("/v1/items")
+    public List<GroceryItem> getItemsByTagId(final @RequestParam("tagId") long tagId)
+            throws GroceryTagNotFoundException {
+
+        LOG.debug("'Get items by tagId request received' tag_id='{}'", tagId);
+
+        return groceryItemService.getGroceryItemsByTag(tagId);
     }
 
     @PostMapping("/v1/items")
