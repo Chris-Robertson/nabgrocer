@@ -14,6 +14,9 @@ https://www.getpostman.com/collections/1e782753d912b4bb4ef9
 
 ### Database
 - NabGrocer users an embedded, in-memory [H2 SQL database](https://www.h2database.com/html/main.html)
+- Data can be seeded into the H2 database on application startup. This can be handy for running 
+locally, but tests should do their own seeding. To enable, just remove `DISABLED` from 
+`src/main/resources/data.sql.DISABLED`
 
 ### Static Code Analysis
 
