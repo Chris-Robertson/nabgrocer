@@ -25,39 +25,43 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
             .getLogger(GlobalControllerExceptionHandler.class);
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException ex,
-                                                        WebRequest request) {
+    public ResponseEntity<Object> handleIllegalArgument(final IllegalArgumentException ex,
+                                                        final WebRequest request) {
         LOG.error(ex.getMessage());
         return buildResponse(ex, BAD_REQUEST, request);
     }
 
     @ExceptionHandler(GroceryItemNotFoundException.class)
-    public ResponseEntity<Object> handleGroceryItemNotFound(GroceryItemNotFoundException ex,
-                                                            WebRequest request) {
+    public ResponseEntity<Object> handleGroceryItemNotFound(final GroceryItemNotFoundException ex,
+                                                            final WebRequest request) {
         LOG.error(ex.getMessage());
         return buildResponse(ex, NOT_FOUND, request);
     }
 
-    private ResponseEntity<Object> buildResponse(Exception ex,
-                                                 HttpStatus httpStatus,
-                                                 WebRequest request) {
+    private ResponseEntity<Object> buildResponse(final Exception ex,
+                                                 final HttpStatus httpStatus,
+                                                 final WebRequest request) {
         return handleExceptionInternal(ex, buildJsonErrorBody(ex, httpStatus),
                 buildResponseHeaders(), httpStatus, request);
     }
 
-    private String buildJsonErrorBody(Exception ex, HttpStatus httpStatus) {
+    private String buildJsonErrorBody(final Exception ex, final HttpStatus httpStatus) {
+        String errorResponseBodyString;
         try {
-            return new ObjectMapper().writeValueAsString(new ErrorResponseBody(
-                    httpStatus.toString(), ex.getMessage()));
+            final ErrorResponseBody errorResponseBody = new ErrorResponseBody(httpStatus.toString(),
+                    ex.getMessage());
+            errorResponseBodyString = new ObjectMapper().writeValueAsString(errorResponseBody);
+
         } catch (JsonProcessingException jsonException) {
-            String jsonErrorString = "Could not serialise error response body";
-            LOG.error(jsonErrorString, jsonException);
-            return jsonErrorString;
+            errorResponseBodyString = "Could not serialise error response body";
+            LOG.error(errorResponseBodyString, jsonException);
         }
+
+        return errorResponseBodyString;
     }
 
     private static HttpHeaders buildResponseHeaders() {
-        HttpHeaders headers = new HttpHeaders();
+        final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(APPLICATION_JSON);
         return headers;
     }

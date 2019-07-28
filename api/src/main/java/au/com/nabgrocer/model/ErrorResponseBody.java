@@ -23,6 +23,7 @@ public class ErrorResponseBody {
     }
 
     public ErrorResponseBody() {
+        // Empty constructor for JSON serialisation.
     }
 
     public ErrorResponseBody(final String httpStatus, final String errorMessage) {

@@ -24,32 +24,32 @@ public class GroceryItemService {
     }
 
     public GroceryItem getGroceryItemById(final long itemId) {
-        GroceryItem retrievedGroceryItem = groceryItemRepository.findByItemId(itemId);
+        final GroceryItem retrievedGroceryItem = groceryItemRepository.findByItemId(itemId);
         LOG.debug("'Retrieved grocery item from database' "
                 + "retrieved_grocery_item='{}'", retrievedGroceryItem);
         return retrievedGroceryItem;
     }
 
     public GroceryItem insertGroceryItem(final GroceryItem groceryItemToSave) {
-        GroceryItem savedGroceryItem = groceryItemRepository.save(groceryItemToSave);
+        final GroceryItem savedGroceryItem = groceryItemRepository.save(groceryItemToSave);
         LOG.debug("'Saved grocery item to database' "
                 + "saved_grocery_item='{}'", savedGroceryItem);
         return savedGroceryItem;
     }
 
     public GroceryItem updateGroceryItem(final GroceryItem groceryItemUpdate) {
-        GroceryItem updatedGroceryItem = groceryItemRepository.save(groceryItemUpdate);
+        final GroceryItem updatedGroceryItem = groceryItemRepository.save(groceryItemUpdate);
         LOG.debug("'Updated grocery item in database' "
                 + "updated_grocery_item='{}'", updatedGroceryItem);
         return updatedGroceryItem;
     }
 
     public void deleteGroceryItem(final long itemId) throws GroceryItemNotFoundException {
-        if (!groceryItemRepository.existsById(itemId)) {
+        if (groceryItemRepository.existsById(itemId)) {
+            groceryItemRepository.deleteById(itemId);
+        } else {
             throw new GroceryItemNotFoundException("GroceryItem with provided itemId does not "
                     + "exist in database.");
-        } else {
-            groceryItemRepository.deleteById(itemId);
         }
     }
 }
