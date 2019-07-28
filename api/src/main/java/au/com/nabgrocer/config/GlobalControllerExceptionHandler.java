@@ -5,6 +5,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import au.com.nabgrocer.exception.GroceryItemNotFoundException;
+import au.com.nabgrocer.exception.GroceryTagAlreadyExistsException;
+import au.com.nabgrocer.exception.GroceryTagNotFoundException;
 import au.com.nabgrocer.model.ErrorResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,11 +33,17 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
         return buildResponse(ex, BAD_REQUEST, request);
     }
 
-    @ExceptionHandler(GroceryItemNotFoundException.class)
-    public ResponseEntity<Object> handleGroceryItemNotFound(final GroceryItemNotFoundException ex,
-                                                            final WebRequest request) {
+    @ExceptionHandler({GroceryItemNotFoundException.class, GroceryTagNotFoundException.class})
+    public ResponseEntity<Object> handleNotFound(final Exception ex, final WebRequest request) {
         LOG.error(ex.getMessage());
         return buildResponse(ex, NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(GroceryTagAlreadyExistsException.class)
+    public ResponseEntity<Object> handleAlreadyExists(final GroceryTagAlreadyExistsException ex,
+                                                      final WebRequest request) {
+        LOG.error(ex.getMessage());
+        return buildResponse(ex, BAD_REQUEST, request);
     }
 
     private ResponseEntity<Object> buildResponse(final Exception ex,
