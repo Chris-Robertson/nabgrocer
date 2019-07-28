@@ -68,6 +68,7 @@ everywhere, all the time.
 ## TODO
 *Stuff I wanted to implement but ran out of time*
 - Spring HATEOAS
+- OpenAPI specification
 - JavaDoc comments in controllers and services. I don't add them while developing quickly as the 
 methods can change a lot.
 - Unit tests for services
