@@ -1,7 +1,7 @@
 # nabGrocer
 A simple apple-tracking application.
 
-Chris Robertson
+Author: Chris Robertson
 
 chrisxrobertson@gmail.com
 
@@ -9,7 +9,10 @@ chrisxrobertson@gmail.com
 There's a bash script that will start the backend Spring Boot application and 
 the front end Angular application and open it in your browser.
 
+*NOTE: The Angular app startup is currenlty disabled while being developed*
+
 `sudo chmod +x ./start.sh`
+
 `./start.sh`
 
 Just close the script with CTRL-C to stop both applications.
@@ -21,6 +24,21 @@ An Anugular webapp is currently being developed.
 
 ### Postman Collection
 https://www.getpostman.com/collections/1e782753d912b4bb4ef9
+
+### Build
+The API uses [Gradle](https://gradle.org/) for build automation and dependency
+management.
+
+From the `nab-grocer-api` directory:
+
+#### Build Application
+`./gradlew clean build`
+
+#### Run Application Locally
+`./gradlew clean bootRun`
+
+### Framework
+The API uses Spring Boot framework `2.1.6.RELEASE`
 
 ### Database
 - NabGrocer users an embedded, in-memory [H2 SQL database](https://www.h2database.com/html/main.html)
@@ -58,7 +76,7 @@ methods can change a lot.
 - Builder for `ErrorResponseBody`
 - Paged batch read of all items
 
-## Potential Bugs and Edge Cases
+### Potential Bugs and Edge Cases
 - Adding a new grocery item via POST when one with same name already exists
 - Update item via PUT with no changes causes SQL index error. GroceryItem index auto increment type?
 - GET requests where repo returns null are returning 200 OK! Don't know how I missed that...
