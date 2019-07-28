@@ -37,6 +37,7 @@ methods can change a lot.
 - Unit tests for services
 - Configure a separate H2 DB for tests that can be blown away after each spec
 - Suppress PMD warnings at method or class level if I don't want to turn off the check completely
+- Builder for `ErrorResponseBody`
 
 ## Potential Bugs and Edge Cases
 - Adding a new grocery item via POST when one with same name already exists
