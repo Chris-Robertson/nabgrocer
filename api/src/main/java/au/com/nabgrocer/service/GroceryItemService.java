@@ -1,5 +1,6 @@
 package au.com.nabgrocer.service;
 
+import au.com.nabgrocer.exception.GroceryItemNotFoundException;
 import au.com.nabgrocer.model.GroceryItem;
 import au.com.nabgrocer.repository.GroceryItemRepository;
 import org.slf4j.Logger;
@@ -54,8 +55,11 @@ public interface GroceryItemService {
             return updatedGroceryItem;
         }
 
-        @Override
-        public void deleteGroceryItem(final long itemId) {
+    public void deleteGroceryItem(final long itemId) throws GroceryItemNotFoundException {
+        if (!groceryItemRepository.existsById(itemId)) {
+            throw new GroceryItemNotFoundException("GroceryItem with provided itemId does not "
+                    + "exist in database.");
+        } else {
             groceryItemRepository.deleteById(itemId);
         }
     }

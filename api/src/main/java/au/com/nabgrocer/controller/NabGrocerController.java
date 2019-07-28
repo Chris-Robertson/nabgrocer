@@ -1,5 +1,6 @@
 package au.com.nabgrocer.controller;
 
+import au.com.nabgrocer.exception.GroceryItemNotFoundException;
 import au.com.nabgrocer.model.GroceryItem;
 import au.com.nabgrocer.model.GroceryItemDto;
 import au.com.nabgrocer.service.GroceryItemService;
@@ -47,13 +48,20 @@ public class NabGrocerController {
 
     @PutMapping("/v1/items")
     public GroceryItem updateItem(final @RequestBody GroceryItemDto groceryItemDto) {
-        LOG.debug("'Update item request received' item_to_update='{}'", groceryItemDto);
-        final GroceryItem groceryItemToUpdate = mapToEntity(groceryItemDto);
-        return groceryItemService.updateGroceryItem(groceryItemToUpdate);
+        LOG.debug("'Update item request received' item_update='{}'", groceryItemDto);
+        final GroceryItem groceryItemUpdate = mapToEntity(groceryItemDto);
+
+        if (groceryItemUpdate.getItemId() == 0) {
+            throw new IllegalArgumentException("Update item PUT request requires non-zero itemId "
+                    + "in payload object");
+        }
+
+        return groceryItemService.updateGroceryItem(groceryItemUpdate);
     }
 
     @DeleteMapping("/v1/items/{itemId}")
-    public void deleteItem(final @PathVariable int itemId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteItem(final @PathVariable int itemId) throws GroceryItemNotFoundException {
         LOG.debug("'Delete item request received' item_id='{}'", itemId);
         groceryItemService.deleteGroceryItem(itemId);
     }
