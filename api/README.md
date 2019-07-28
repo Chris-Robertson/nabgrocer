@@ -7,6 +7,9 @@ Write a simple frontend and backend application that provides the following func
 -	Ability to tag grocery items by category
 -	Ability to search by category
 
+## Postman Collection
+https://www.getpostman.com/collections/1e782753d912b4bb4ef9
+
 ## Notes
 
 ### Database
@@ -34,3 +37,5 @@ methods can change a lot.
 
 ## Potential Bugs and Edge Cases
 - Adding a new grocery item via POST when one with same name already exists
+- Update item via PUT with no changes causes SQL index error. GroceryItem index auto increment type?
+- GET requests where repo returns null are returning 200 OK! Don't know how I missed that...
