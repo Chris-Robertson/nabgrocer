@@ -1,0 +1,16 @@
+
+<button type="button" class="btn btn-primary" (click)="getAllItems()">
+  Get All Items
+</button>
+
+<div *ngIf="nabGrocerApi.itemList">
+  <div *ngFor="let item of nabGrocerApi.itemList; index as itemId">
+    <div class="card">
+      <h3>
+        <a [name]="item.itemName">
+          TEST A {{ item.itemName }}
+        </a>
+      </h3>
+    </div>
+  </div>
+</div>

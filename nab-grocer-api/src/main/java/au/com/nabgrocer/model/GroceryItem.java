@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class GroceryItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long itemId;
 
     @Column(unique = true)

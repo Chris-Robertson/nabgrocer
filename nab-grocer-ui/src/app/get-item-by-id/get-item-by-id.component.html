@@ -1,0 +1,16 @@
+<div class="container">
+  <h3>Get Item By ID</h3>
+  <form [formGroup]="getItemByIdForm" (ngSubmit)="onSubmit(getItemByIdForm.value)">
+    <div class="form-group">
+      <label for="itemId">ID</label>
+      <input type="number" class="form-control" id="itemId" formControlName="itemId"/>
+    </div>
+
+    <button type="submit" class="btn btn-success mb-4">Get Item</button>
+
+  </form>
+
+  <div *ngIf="this.item">
+    <app-item [item]="item"></app-item>
+  </div>
+</div>
