@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class NabGrocerApiService {
+export class ItemsService {
 
   nabGrocerItemsUrl = "http://localhost:8080/v1/items";
 
@@ -23,8 +23,8 @@ export class NabGrocerApiService {
     return this.http.get<Item>(`${this.nabGrocerItemsUrl}/${itemId}`);
   }
 
-  deleteItemById(itemId: number): Observable<Item> {
-    return this.http.delete<Item>(`${this.nabGrocerItemsUrl}/${itemId}`);
+  deleteItemById(itemId: number): void {
+    this.http.delete<Item>(`${this.nabGrocerItemsUrl}/${itemId}`).subscribe();
   }
 
   addItem(item: Item): Observable<Item> {

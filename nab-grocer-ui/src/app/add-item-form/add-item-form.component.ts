@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NabGrocerApiService} from "../nab-grocer-api.service";
+import {ItemsService} from "../items.service";
 import {Item} from "../item";
 import { FormBuilder } from '@angular/forms';
 
@@ -14,7 +14,7 @@ export class AddItemFormComponent {
   itemAdded;
 
   constructor(
-    private nabGrocerApi: NabGrocerApiService,
+    private nabGrocerApi: ItemsService,
     private formBuilder: FormBuilder
   ) {
     this.addItemForm = this.formBuilder.group({

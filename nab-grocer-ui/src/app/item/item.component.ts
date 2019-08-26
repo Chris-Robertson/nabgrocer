@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Input } from '@angular/core';
 import {Item} from "../item";
+import {ItemsService} from "../items.service";
 
 @Component({
   selector: 'app-item',
@@ -9,4 +10,15 @@ import {Item} from "../item";
 })
 export class ItemComponent {
   @Input() item: Item;
+  deleted = false;
+
+  constructor(
+    private itemsService: ItemsService
+  ) {}
+
+  deleteItem() {
+    this.itemsService.deleteItemById(this.item.itemId);
+    this.deleted = true
+  }
+
 }

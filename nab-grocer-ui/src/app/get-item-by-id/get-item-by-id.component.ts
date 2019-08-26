@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NabGrocerApiService} from "../nab-grocer-api.service";
+import {ItemsService} from "../items.service";
 import { FormBuilder } from '@angular/forms';
 import {Item} from "../item";
 
@@ -14,7 +14,7 @@ export class GetItemByIdComponent {
   item: Item;
 
   constructor(
-    private nabGrocerApi: NabGrocerApiService,
+    private nabGrocerApi: ItemsService,
     private formBuilder: FormBuilder
   ) {
     this.getItemByIdForm = this.formBuilder.group({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NabGrocerApiService} from "../nab-grocer-api.service";
+import {ItemsService} from "../items.service";
 
 @Component({
   selector: 'app-list-items',
@@ -9,7 +9,7 @@ import {NabGrocerApiService} from "../nab-grocer-api.service";
 export class ListItemsComponent {
 
   constructor(
-    private nabGrocerApi: NabGrocerApiService
+    private nabGrocerApi: ItemsService
   ) { }
 
   getAllItems() {
