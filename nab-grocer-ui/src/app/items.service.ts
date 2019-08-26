@@ -16,7 +16,10 @@ export class ItemsService {
 
   getItems(): void {
     this.http.get<Item[]>(this.nabGrocerItemsUrl)
-      .subscribe(result => this.itemList = result);
+      // .subscribe(result => this.itemList = result);
+      .subscribe(result => result.map(item => {
+        this.itemList.push(new Item(item.itemName, item.itemId, item.itemTags))
+      }));
   }
 
   getItemById(itemId: number): Observable<Item> {

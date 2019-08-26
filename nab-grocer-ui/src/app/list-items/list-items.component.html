@@ -4,7 +4,7 @@
   </button>
 
   <div *ngIf="nabGrocerApi.itemList">
-    <div class="list-group" *ngFor="let item of nabGrocerApi.itemList; index as itemId">
+    <div class="list-group" *ngFor="let item of nabGrocerApi.itemList">
       <app-item [item]="item"></app-item>
     </div>
   </div>
