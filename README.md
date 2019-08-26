@@ -15,9 +15,10 @@ the front end Angular application and open it in your browser.
 Just close the script with CTRL-C to stop both applications.
 
 ## UI
-An Anugular webapp is currently being developed.
+An Angular 8 application. 
 
 ## API
+A Java Spring Boot application.
 
 ### Postman Collection
 https://www.getpostman.com/collections/1e782753d912b4bb4ef9
@@ -62,7 +63,7 @@ as reference, with a few changes.
 - Javadocs. I turn this check off as I don't think Javadoc comments are suitable 
 everywhere, all the time.
 
-## TODO
+### TODO
 *Stuff I wanted to implement but ran out of time*
 - Spring HATEOAS
 - OpenAPI specification
@@ -72,7 +73,6 @@ methods can change a lot.
 - Configure a separate H2 DB for tests that can be blown away after each spec
 - Suppress PMD warnings at method or class level if I don't want to turn off the check completely
 - Builder for `ErrorResponseBody`
-- Paged batch read of all items
 
 ### Potential Bugs and Edge Cases
 - Adding a new grocery item via POST when one with same name already exists
