@@ -22,13 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD:nab-grocer-api/src/main/java/au/com/nabgrocer/controller/GroceryItemController.java
 /**
  * RESTful CRUD endpoints for GroceryItems.
  */
-=======
 @CrossOrigin
->>>>>>> ui-crud:api/src/main/java/au/com/nabgrocer/controller/GroceryItemController.java
 @RestController
 public class GroceryItemController {
 
