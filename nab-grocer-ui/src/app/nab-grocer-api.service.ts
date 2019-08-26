@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class NabGrocerApiService {
 
-  nabGrocerItemsUrl = "http://localhost:8080/v1/items/";
+  nabGrocerItemsUrl = "http://localhost:8080/v1/items";
 
   itemList: Item[] = [];
 
@@ -17,6 +17,14 @@ export class NabGrocerApiService {
   getItems(): void {
     this.http.get<Item[]>(this.nabGrocerItemsUrl)
       .subscribe(result => this.itemList = result);
+  }
+
+  getItemById(itemId: number): Observable<Item> {
+    return this.http.get<Item>(`${this.nabGrocerItemsUrl}/${itemId}`);
+  }
+
+  deleteItemById(itemId: number): Observable<Item> {
+    return this.http.delete<Item>(`${this.nabGrocerItemsUrl}/${itemId}`);
   }
 
   addItem(item: Item): Observable<Item> {
