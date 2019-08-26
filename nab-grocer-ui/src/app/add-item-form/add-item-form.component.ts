@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {ItemsService} from "../items.service";
 import {Item} from "../item";
-import { FormBuilder } from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
+import {ItemTag} from "../item-tag";
 
 @Component({
   selector: 'app-add-item-form',
@@ -11,19 +12,32 @@ import { FormBuilder } from '@angular/forms';
 export class AddItemFormComponent {
 
   addItemForm;
-  itemAdded;
+  itemAdded: Item;
 
   constructor(
     private nabGrocerApi: ItemsService,
     private formBuilder: FormBuilder
   ) {
     this.addItemForm = this.formBuilder.group({
-      itemName: ""
+      itemName: "",
+      itemTags: []
     })
   }
 
-  onSubmit(itemToAdd: Item) {
+  onSubmit(addItemFormData) {
+
+    // map comma separated tags into list of tag objects
+    if (addItemFormData.itemTags) {
+      addItemFormData.itemTags = addItemFormData.itemTags.split(',').map(rawTag => {
+        return new ItemTag(rawTag.toString());
+      });
+    }
+
+    this.nabGrocerApi.addItem(addItemFormData).subscribe(item => {
+      this.itemAdded = item;
+      this.nabGrocerApi.getItems();
+    });
+
     this.addItemForm.reset();
-    this.nabGrocerApi.addItem(itemToAdd).subscribe(item => this.itemAdded = item);
   }
 }
