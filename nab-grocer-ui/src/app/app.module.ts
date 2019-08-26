@@ -9,7 +9,6 @@ import { AddItemFormComponent } from './add-item-form/add-item-form.component';
 import { AppComponent } from './app.component';
 import { ItemComponent } from './item/item.component';
 import { ListItemsComponent } from './list-items/list-items.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
 import { GetItemByIdComponent } from './get-item-by-id/get-item-by-id.component';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { GetItemByIdComponent } from './get-item-by-id/get-item-by-id.component'
     ItemComponent,
     ListItemsComponent,
     ListItemsComponent,
-    SearchBarComponent,
     GetItemByIdComponent
   ],
   imports: [
