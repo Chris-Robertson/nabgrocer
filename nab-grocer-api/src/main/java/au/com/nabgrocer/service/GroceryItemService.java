@@ -6,11 +6,14 @@ import au.com.nabgrocer.model.GroceryItem;
 import au.com.nabgrocer.model.GroceryTag;
 import au.com.nabgrocer.repository.GroceryItemRepository;
 import au.com.nabgrocer.repository.GroceryTagRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,8 +22,9 @@ public class GroceryItemService {
 
     private static final Logger LOG = LoggerFactory.getLogger(GroceryItemService.class);
 
-    private final GroceryItemRepository groceryItemRepository;
+    private static final int PAGE_SIZE = 10;
 
+    private final GroceryItemRepository groceryItemRepository;
     private final GroceryTagRepository groceryTagRepository;
 
     @Autowired
@@ -36,6 +40,25 @@ public class GroceryItemService {
         LOG.debug("'Retrieved grocery item from database' "
                 + "retrieved_grocery_item='{}'", retrievedGroceryItem);
         return retrievedGroceryItem;
+    }
+
+    public List<GroceryItem> getGroceryItems(final int maxMessages) {
+        int messagesToFetchCount = maxMessages;
+        int pageIndex = 0;
+        List<GroceryItem> groceryItems = new ArrayList<>();
+        while (messagesToFetchCount > 0) {
+            int pageSize = Math.min(messagesToFetchCount, PAGE_SIZE);
+            groceryItems.addAll(groceryItemRepository
+                    .findAll(PageRequest.of(pageIndex, pageSize)).getContent());
+            if (groceryItems.isEmpty()) {
+                LOG.debug("'No items found'");
+                break;
+            }
+            pageIndex++;
+            messagesToFetchCount -= groceryItems.size();
+        }
+
+        return groceryItems;
     }
 
     public List<GroceryItem> getGroceryItemsByTag(final long tagId)
@@ -57,6 +80,7 @@ public class GroceryItemService {
         }
     }
 
+    //todo check if name already exists
     public GroceryItem insertGroceryItem(final GroceryItem groceryItemToSave) {
         final GroceryItem savedGroceryItem = groceryItemRepository.save(groceryItemToSave);
         LOG.debug("'Saved grocery item to database' "

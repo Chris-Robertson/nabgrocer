@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,14 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 public class GroceryItemController {
 
     private static final Logger LOG = LoggerFactory.getLogger(GroceryItemController.class);
 
-    private final ModelMapper modelMapper = new ModelMapper();
+    private static final int MAX_MESSAGES_DEFAULT = 10;
 
     private final GroceryItemService groceryItemService;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     public GroceryItemController(final GroceryItemService groceryItemService) {
@@ -42,12 +45,29 @@ public class GroceryItemController {
     }
 
     @GetMapping("/v1/items")
-    public List<GroceryItem> getItemsByTagId(final @RequestParam("tagId") long tagId)
+    public List<GroceryItem> getItemsList(
+            final @RequestParam(value = "tagId", required = false) Long tagId,
+            final @RequestParam(value = "maxMessages", required = false) Integer maxMessages)
             throws GroceryTagNotFoundException {
 
-        LOG.debug("'Get items by tagId request received' tag_id='{}'", tagId);
+        int maxMessagesForRequest = MAX_MESSAGES_DEFAULT;
 
-        return groceryItemService.getGroceryItemsByTag(tagId);
+        if (maxMessages != null) {
+            maxMessagesForRequest = maxMessages;
+        }
+
+        //TODO page this result
+        if (tagId != null) {
+            LOG.debug("'Get items by tagId request received' tag_id='{}'", tagId);
+
+            return groceryItemService.getGroceryItemsByTag(tagId);
+
+        } else {
+            LOG.debug("'Get all items request received, returning max messages' max_message='{}'",
+                    maxMessagesForRequest);
+
+            return groceryItemService.getGroceryItems(maxMessagesForRequest);
+        }
     }
 
     @PostMapping("/v1/items")
