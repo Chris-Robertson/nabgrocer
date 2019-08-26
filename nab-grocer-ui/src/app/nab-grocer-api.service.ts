@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Item} from "./item";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,11 @@ export class NabGrocerApiService {
   constructor(private http: HttpClient) { }
 
   getItems(): void {
-    console.log("itemList=" + this.itemList);
     this.http.get<Item[]>(this.nabGrocerItemsUrl)
       .subscribe(result => this.itemList = result);
+  }
+
+  addItem(item: Item): Observable<Item> {
+    return this.http.post<Item>(this.nabGrocerItemsUrl, item);
   }
 }

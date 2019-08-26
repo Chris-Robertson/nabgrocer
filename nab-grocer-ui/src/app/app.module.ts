@@ -1,25 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule }   from '@angular/forms';
+
+import { AddItemFormComponent } from './add-item-form/add-item-form.component';
 import { AppComponent } from './app.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
-import { ListItemsComponent } from './list-items/list-items.component';
 import { ItemComponent } from './item/item.component';
+import { ListItemsComponent } from './list-items/list-items.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
+    AddItemFormComponent,
     AppComponent,
-    SearchBarComponent,
+    ItemComponent,
     ListItemsComponent,
     ListItemsComponent,
-    ItemComponent
+    SearchBarComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

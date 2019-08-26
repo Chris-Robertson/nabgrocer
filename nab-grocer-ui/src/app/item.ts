@@ -1,7 +1,7 @@
 export class Item {
   constructor(
-    public itemId: number,
     public itemName: string,
-    public itemTags: string[]
+    public itemId?: number,
+    public itemTags?: string[]
   ) {}
 }
