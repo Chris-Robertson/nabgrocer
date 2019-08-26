@@ -1,0 +1,12 @@
+<!--<div class="card">-->
+<div>
+  <button type="button" class="btn btn-primary btn-large mb-4" (click)="getAllItems()">
+    Get All Items
+  </button>
+
+  <div *ngIf="nabGrocerApi.itemList">
+    <div class="list-group" *ngFor="let item of nabGrocerApi.itemList; index as itemId">
+      <app-item [item]="item"></app-item>
+    </div>
+  </div>
+</div>
