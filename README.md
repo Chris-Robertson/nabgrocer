@@ -21,7 +21,7 @@ An Angular 8 application.
 A Java Spring Boot application.
 
 ### Postman Collection
-https://www.getpostman.com/collections/1e782753d912b4bb4ef9
+https://www.getpostman.com/collections/b4bb4947e19706911ca9
 
 ### Build
 The API uses [Gradle](https://gradle.org/) for build automation and dependency
